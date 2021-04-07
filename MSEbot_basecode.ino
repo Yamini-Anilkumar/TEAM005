@@ -3,6 +3,7 @@
 //Western Engineering base code
 //2020 05 13 E J Porter
 
+//EDITS MADE TO INITIAL FILE APRIL 07 2021
 
 /*
   esp32                                           MSE-DuinoV2
@@ -41,6 +42,7 @@
 
 
 //Pin assignments
+//ADD TO PIN ASSIGNMENT: NEW 18 & 19 3V3 PINOUTS FOR CLIMBING MOTOTR
 const int ciHeartbeatLED = 2;
 const int ciPB1 = 27;
 const int ciPB2 = 26;
@@ -48,8 +50,8 @@ const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin 
 const int ciLimitSwitch = 26;
 const int ciIRDetector = 16;
 const int ciMotorLeftA = 4;
-const int ciMotorLeftB = 18;
-const int ciMotorRightA = 19;
+const int ciMotorLeftB = 18;  //5V
+const int ciMotorRightA = 19;    //5V
 const int ciMotorRightB = 12;
 const int ciEncoderLeftA = 17;
 const int ciEncoderLeftB = 5;
