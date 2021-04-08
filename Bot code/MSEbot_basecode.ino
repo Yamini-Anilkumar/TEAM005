@@ -365,7 +365,10 @@ void loop()
                                 ucMotorStateIndex = 0;
                                 ucMotorState = 0;
                                 move(0);
-                          if (beaconTrip != 0) {
+                          
+                                digitalWrite(ciNearMot, HIGH);
+                                digitalWrite(ciFarMot, HIGH);
+                          //if (beaconTrip != 0) {
                             //ucMotorStateIndex = 18;
                               
                             if (!digitalRead(ciLimitSwitch)) // BUTTON IS PUSHED
@@ -373,13 +376,9 @@ void loop()
                                 //digitalWrite(ciNearMot, LOW);
                                 //digitalWrite(ciFarMot, LOW);  
                               }
-                              else if (digitalRead(ciLimitSwitch))
-                              {
-                                digitalWrite(ciNearMot, HIGH);
-                                digitalWrite(ciFarMot, HIGH);
-                              }
+                              
                             
-                            }
+                            //}
                             break;
                           }
                              
