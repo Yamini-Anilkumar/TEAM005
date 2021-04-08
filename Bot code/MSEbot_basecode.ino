@@ -4,6 +4,8 @@
 //2020 05 13 E J Porter
 
 
+//TEAM 005 UPDATED APRIL 08/21 AT 3:10PM
+
 /*
   esp32                                           MSE-DuinoV2
   pins         description                        Brd Jumpers /Labels                                                                  User (Fill in chart with user PIN usage)
@@ -41,7 +43,7 @@
 
 
 //Pin assignments
-const int ciHeartbeatLED = 2;
+//const int ciHeartbeatLED = 2;
 const int ciPB1 = 27;
 const int ciPB2 = 26;
 const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin AD4 is connected to Poteniometer R1
@@ -365,21 +367,22 @@ void loop()
                                 move(0);
                           if (beaconTrip != 0) {
                             //ucMotorStateIndex = 18;
-
-                            break;
-                          }
-                             if (!digitalRead(ciLimitSwitch)) // BUTTON IS PUSHED
+                              
+                            if (!digitalRead(ciLimitSwitch)) // BUTTON IS PUSHED
                               {
-                                digitalWrite(ciNearMot, LOW);
-                                digitalWrite(ciNearMot, LOW);  
+                                //digitalWrite(ciNearMot, LOW);
+                                //digitalWrite(ciFarMot, LOW);  
                               }
                               else if (digitalRead(ciLimitSwitch))
                               {
                                 digitalWrite(ciNearMot, HIGH);
-                                digitalWrite(ciNearMot, HIGH);
+                                digitalWrite(ciFarMot, HIGH);
                               }
                             
-                        }
+                            }
+                            break;
+                          }
+                             
 
                     }//end of switch statement of ledColor
                     break;
