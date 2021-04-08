@@ -3,7 +3,6 @@
 //Western Engineering base code
 //2020 05 13 E J Porter
 
-//EDITS MADE TO INITIAL FILE APRIL 07 2021
 
 /*
   esp32                                           MSE-DuinoV2
@@ -42,7 +41,6 @@
 
 
 //Pin assignments
-//ADD TO PIN ASSIGNMENT: NEW 18 & 19 3V3 PINOUTS FOR CLIMBING MOTOTR
 const int ciHeartbeatLED = 2;
 const int ciPB1 = 27;
 const int ciPB2 = 26;
@@ -50,16 +48,18 @@ const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin 
 const int ciLimitSwitch = 26;
 const int ciIRDetector = 16;
 const int ciMotorLeftA = 4;
-const int ciMotorLeftB = 18;  //5V
-const int ciMotorRightA = 19;    //5V
+const int ciMotorLeftB = 18;
+const int ciMotorRightA = 19;
 const int ciMotorRightB = 12;
 const int ciEncoderLeftA = 17;
 const int ciEncoderLeftB = 5;
 const int ciEncoderRightA = 14;
 const int ciEncoderRightB = 13;
-const int ciSmartLED = 25;
+const int ciSmartLED = 25;                    //BLOCK OUT SMART LEDS FOR NOW                          
 const int ciStepperMotorDir = 22;
 const int ciStepperMotorStep = 21;
+const int ciNearMot = 15;
+const int ciFarMot = 2;
 
 volatile uint32_t vui32test1;
 volatile uint32_t vui32test2;
@@ -132,14 +132,14 @@ Adafruit_NeoPixel SmartLEDs(2, 25, NEO_GRB + NEO_KHZ400);
 int ledColor;
 int beaconTrip;
 
-const int servoPin = 15;                     // select the digital pin used for RC servo motor
-const int servoChannel = 8;
-int servoPos;
+//const int servoPin = 15;                     // select the digital pin used for RC servo motor
+//const int servoChannel = 8;
+//int servoPos;
 
 void setup() {
 
-  ledcAttachPin(servoPin, servoChannel);
-  ledcSetup(servoChannel, 50, 16);
+  //ledcAttachPin(servoPin, servoChannel);
+  //ledcSetup(servoChannel, 50, 16);
 
   Serial.begin(115200);
   Serial2.begin(2400, SERIAL_8N1, ciIRDetector);  // IRDetector on RX2 receiving 8-bit words at 2400 baud
@@ -166,6 +166,9 @@ void setup() {
   pinMode(ciHeartbeatLED, OUTPUT);
   pinMode(ciPB1, INPUT_PULLUP);
   pinMode(ciLimitSwitch, INPUT_PULLUP);
+  pinMode(ciNearMot, OUTPUT);
+  pinMode(ciFarMot, OUTPUT);
+  
 
   SmartLEDs.begin();                          // Initialize Smart LEDs object (required)
   SmartLEDs.clear();                          // Set all pixel colours to off
@@ -208,6 +211,7 @@ void loop()
   }
   iLastButtonState = iButtonValue;             // store button state
 
+/*
   if (!digitalRead(ciLimitSwitch))
   {
     btRun = 0; //if limit switch is pressed stop bot
@@ -215,6 +219,7 @@ void loop()
     ucMotorState = 0;
     move(0);
   }
+*/
 
   if (Serial2.available() > 0) {               // check for incoming data
     CR1_ui8IRDatum = Serial2.read();          // read the incoming byte
@@ -354,10 +359,26 @@ void loop()
                       case 2:
                         {
                           beaconTrip = 1;
+                                btRun = 0; //if limit switch is pressed stop bot
+                                ucMotorStateIndex = 0;
+                                ucMotorState = 0;
+                                move(0);
                           if (beaconTrip != 0) {
-                            ucMotorStateIndex = 18;
+                            //ucMotorStateIndex = 18;
+
                             break;
                           }
+                             if (!digitalRead(ciLimitSwitch)) // BUTTON IS PUSHED
+                              {
+                                digitalWrite(ciNearMot, LOW);
+                                digitalWrite(ciNearMot, LOW);  
+                              }
+                              else if (digitalRead(ciLimitSwitch))
+                              {
+                                digitalWrite(ciNearMot, HIGH);
+                                digitalWrite(ciNearMot, HIGH);
+                              }
+                            
                         }
 
                     }//end of switch statement of ledColor
