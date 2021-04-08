@@ -43,7 +43,7 @@
 
 
 //Pin assignments
-//const int ciHeartbeatLED = 2;
+const int ciHeartbeatLED = 2;
 const int ciPB1 = 27;
 const int ciPB2 = 26;
 const int ciPot1 = A4;    //GPIO 32  - when JP2 has jumper installed Analog pin AD4 is connected to Poteniometer R1
@@ -60,8 +60,8 @@ const int ciEncoderRightB = 13;
 const int ciSmartLED = 25;                    //BLOCK OUT SMART LEDS FOR NOW                          
 const int ciStepperMotorDir = 22;
 const int ciStepperMotorStep = 21;
-const int ciNearMot = 15;
-const int ciFarMot = 2;
+const int ciNearMot = 15;  //USE 3V
+const int ciFarMot = 23;   // USE 3V
 
 volatile uint32_t vui32test1;
 volatile uint32_t vui32test2;
@@ -267,7 +267,7 @@ void loop()
                 case 1:
                   {
 
-                    ENC_SetDistance(-190, -190);
+                    ENC_SetDistance(190, 190);
                     ucMotorState = 4;   //forward1
                     CR1_ui8LeftWheelSpeed = CR1_ui8WheelSpeed;
                     CR1_ui8RightWheelSpeed = CR1_ui8WheelSpeed;
@@ -283,7 +283,7 @@ void loop()
                   }
                 case 3:
                   {
-                    ENC_SetDistance(ci8RightTurn, -(ci8RightTurn));
+                    ENC_SetDistance(-(ci8RightTurn), (ci8RightTurn));
                     CR1_ui8LeftWheelSpeed = CR1_ui8WheelSpeed;
                     CR1_ui8RightWheelSpeed = CR1_ui8WheelSpeed;
                     ucMotorStateIndex = 4;
@@ -299,7 +299,7 @@ void loop()
                   }
                 case 5:
                   {
-                    ENC_SetDistance(-190, -190);
+                    ENC_SetDistance(190, 190);
                     ucMotorState = 4;   //forward3
                     CR1_ui8LeftWheelSpeed = CR1_ui8WheelSpeed;
                     CR1_ui8RightWheelSpeed = CR1_ui8WheelSpeed;
@@ -338,7 +338,7 @@ void loop()
                       case 1:
                         {
                           if (beaconTrip != 1) {
-                            ENC_SetDistance(-70, -70);
+                            ENC_SetDistance(70, 70);
                             ucMotorState = 4;   //forward
                             CR1_ui8LeftWheelSpeed = CR1_ui8WheelSpeed;
                             CR1_ui8RightWheelSpeed = CR1_ui8WheelSpeed;
